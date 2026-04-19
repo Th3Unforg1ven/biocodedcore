@@ -13,7 +13,7 @@ html,body{background:#000;min-height:100vh;width:100%;font-family:'Share Tech Mo
 
 /* UTILS */
 .hidden{display:none!important;}
-.screen{min-height:100vh;display:flex;flex-direction:column;padding:24px 20px;overflow-y:auto;}
+.screen{height:100vh;max-height:100vh;display:flex;flex-direction:column;padding:24px 20px 20px;overflow:hidden;}
 
 /* GLITCH */
 .glitch{font-family:'Orbitron',sans-serif;font-weight:900;color:#fff;letter-spacing:5px;line-height:1;position:relative;display:inline-block;}
@@ -71,7 +71,7 @@ html,body{background:#000;min-height:100vh;width:100%;font-family:'Share Tech Mo
 .quiz-progress-text{font-size:10px;color:rgba(0,255,136,0.35);letter-spacing:2px;margin-top:6px;}
 .quiz-question{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:20px;color:#fff;line-height:1.5;margin-bottom:28px;flex-shrink:0;}
 .quiz-opts{display:flex;flex-direction:column;gap:10px;flex:1;}
-.quiz-opt{border:1px solid rgba(0,255,136,0.18);padding:18px 16px;cursor:pointer;transition:all 0.15s;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));display:flex;align-items:flex-start;gap:14px;min-height:60px;}
+.quiz-opt{border:1px solid rgba(0,255,136,0.18);padding:14px 14px;cursor:pointer;transition:all 0.15s;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));display:flex;align-items:flex-start;gap:12px;min-height:52px;}
 .quiz-opt:active{border-color:#00ff88;background:rgba(0,255,136,0.06);}
 .quiz-opt.selected{border-color:#00ff88;background:rgba(0,255,136,0.07);}
 .quiz-opt-key{font-family:'Orbitron',sans-serif;font-weight:700;font-size:13px;color:#00ff88;flex-shrink:0;margin-top:1px;width:18px;}
@@ -214,60 +214,59 @@ html,body{background:#000;min-height:100vh;width:100%;font-family:'Share Tech Mo
 <div class="scanlines"></div>
 
 <!-- BOOT -->
-<div id="s-boot" class="screen">
-  <div class="boot-log" id="boot-log"></div>
-  <div style="margin-top:28px;">
-    <button class="btn" onclick="show('s-intro')" style="width:100%;">[ RUN ]</button>
+<div id="s-boot" class="screen" style="justify-content:space-between;">
+  <div>
+    <div class="glitch" data-text="BIOCODED" style="font-size:32px;margin-bottom:16px;display:block;">BIOCODED</div>
+    <div class="boot-log" id="boot-log" style="max-height:52vh;overflow:hidden;"></div>
   </div>
+  <button class="btn" onclick="show('s-intro')" style="width:100%;flex-shrink:0;">[ RUN ]</button>
 </div>
 
 <!-- INTRO -->
-<div id="s-intro" class="screen hidden">
-  <div class="page-hdr">
-    <div class="glitch" data-text="BIOCODED" style="font-size:34px;">BIOCODED</div>
-    <div class="page-hdr-sub">DESPERTO CLASSIFICATION PROTOCOL v0.1</div>
+<div id="s-intro" class="screen hidden" style="justify-content:space-between;">
+  <div>
+    <div class="glitch" data-text="BIOCODED" style="font-size:30px;display:block;">BIOCODED</div>
+    <div class="page-hdr-sub" style="margin-top:6px;margin-bottom:16px;">DESPERTO CLASSIFICATION PROTOCOL v0.1</div>
+    <div class="intro-status" style="font-size:12px;margin-bottom:14px;">
+      <div>CORTEX-NET SIGNAL: ANOMALY DETECTED</div>
+      <div>WIREBRAIN REWRITE: FAILED</div>
+      <div>DESPERTO STATUS: CONFIRMED</div>
+    </div>
+    <div class="intro-transmission">
+      <div class="intro-h" style="font-size:15px;">T-Corp controls your perceptions, weaving your reality.</div>
+      <div class="intro-h" style="font-size:15px;">But you, somehow, broke the Protocol.</div>
+      <div class="intro-p" style="font-size:13px;">They tried to rewrite you. It couldn't. And what you became instead is what this terminal is here to find out.</div>
+      <div class="intro-desperto" style="font-size:18px;margin-top:10px;">You're now Desperto.</div>
+      <div class="intro-antidote" style="font-size:11px;">Prepare to insert the Antidote.</div>
+    </div>
+    <div class="intro-hint" style="margin-top:12px;">// 8 QUESTIONS // ARCHETYPE // CLASS // UNIT ID</div>
   </div>
-  <div class="intro-status">
-    <div>CORTEX-NET SIGNAL: ANOMALY DETECTED</div>
-    <div>WIREBRAIN REWRITE: FAILED</div>
-    <div>DESPERTO STATUS: CONFIRMED</div>
-  </div>
-  <div class="intro-transmission">
-    <div class="intro-h">T-Corp controls your perceptions, weaving your reality.</div>
-    <div class="intro-h">But you, somehow, broke the Protocol.</div>
-    <div class="intro-p">This is your chance to reclaim your identity. They tried to rewrite you. It couldn't. And what you became instead is what this terminal is here to find out.</div>
-    <div class="intro-desperto">You're now Desperto.</div>
-    <div class="intro-antidote">Prepare to insert the Antidote.</div>
-  </div>
-  <div class="intro-hint">// 8 QUESTIONS // ARCHETYPE DETECTION // CLASS SELECTION // UNIT ID GENERATED</div>
-  <div class="intro-btns">
+  <div class="intro-btns" style="gap:10px;">
     <button class="btn" onclick="showCodename()">INITIATE SCAN</button>
     <button class="btn secondary" onclick="show('s-retrieve')">LOAD UNIT ID</button>
   </div>
 </div>
 
 <!-- CODENAME -->
-<div id="s-codename" class="screen hidden">
-  <div class="page-hdr">
-    <div class="glitch" data-text="BIOCODED" style="font-size:30px;">BIOCODED</div>
-    <div class="page-hdr-sub">IDENTIFICATION REQUIRED</div>
+<div id="s-codename" class="screen hidden" style="justify-content:space-between;">
+  <div>
+    <div class="glitch" data-text="BIOCODED" style="font-size:30px;display:block;">BIOCODED</div>
+    <div class="page-hdr-sub" style="margin-top:6px;margin-bottom:24px;">IDENTIFICATION REQUIRED</div>
+    <div class="codename-label" style="margin-bottom:20px;">Before the scan begins, the system needs to identify you.</div>
+    <input class="codename-inp" id="codename-inp" maxlength="20" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" placeholder="your codename" onkeydown="if(event.key==='Enter'){event.preventDefault();confirmCodename();}"/>
+    <div class="codename-hint" style="margin-top:8px;">// TYPE AND PRESS CONFIRM</div>
   </div>
-  <div class="codename-label">Before the scan begins, the system needs to identify you.</div>
-  <input class="codename-inp" id="codename-inp" maxlength="20" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" placeholder="your codename" onkeydown="if(event.key==='Enter'){event.preventDefault();confirmCodename();}"/>
-  <div class="codename-hint">// TYPE AND PRESS CONFIRM</div>
-  <div style="margin-top:auto;padding-top:28px;">
-    <button class="btn" onclick="confirmCodename()">CONFIRM</button>
-  </div>
+  <button class="btn" onclick="confirmCodename()">CONFIRM</button>
 </div>
 
 <!-- ADAPT/EVOLVE -->
-<div id="s-adapt" class="screen hidden">
-  <div class="page-hdr">
-    <div class="glitch" data-text="BIOCODED" style="font-size:30px;">BIOCODED</div>
-    <div class="page-hdr-sub">PRE-SCAN CALIBRATION</div>
+<div id="s-adapt" class="screen hidden" style="justify-content:space-between;">
+  <div>
+    <div class="glitch" data-text="BIOCODED" style="font-size:30px;display:block;">BIOCODED</div>
+    <div class="page-hdr-sub" style="margin-top:6px;margin-bottom:20px;">PRE-SCAN CALIBRATION</div>
+    <div class="ae-question" style="font-size:18px;margin-bottom:24px;">One question before the scan begins.</div>
   </div>
-  <div class="ae-question">One question before the scan begins.</div>
-  <div class="ae-cards">
+  <div class="ae-cards" style="flex:1;justify-content:center;display:flex;flex-direction:column;gap:14px;">
     <div class="ae-card" onclick="startQuiz()">
       <div class="ae-card-key">A</div>
       <div class="ae-card-text">Adapt.</div>
@@ -279,56 +278,60 @@ html,body{background:#000;min-height:100vh;width:100%;font-family:'Share Tech Mo
       <div class="ae-card-sub">The signal that mutates cannot be contained.</div>
     </div>
   </div>
+  <div style="height:20px;flex-shrink:0;"></div>
 </div>
 
 <!-- QUIZ -->
-<div id="s-quiz" class="screen hidden" style="padding-bottom:32px;">
-  <div class="quiz-hdr">
-    <div class="glitch" data-text="BIOCODED" style="font-size:28px;">BIOCODED</div>
+<div id="s-quiz" class="screen hidden" style="justify-content:space-between;padding-bottom:24px;">
+  <div class="quiz-hdr" style="flex-shrink:0;">
+    <div class="glitch" data-text="BIOCODED" style="font-size:26px;">BIOCODED</div>
     <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quiz-bar" style="width:0%"></div></div>
     <div class="quiz-progress-text" id="quiz-prog">QUESTION 1 OF 8</div>
   </div>
-  <div class="quiz-question" id="quiz-q">--</div>
-  <div class="quiz-opts" id="quiz-opts"></div>
+  <div class="quiz-question" id="quiz-q" style="font-size:16px;line-height:1.45;flex-shrink:0;margin-bottom:0;">--</div>
+  <div class="quiz-opts" id="quiz-opts" style="flex:1;justify-content:center;display:flex;flex-direction:column;gap:8px;"></div>
 </div>
 
 <!-- WEAPON -->
-<div id="s-weapon" class="screen hidden">
-  <div class="page-hdr">
-    <div style="font-size:10px;color:rgba(0,255,136,0.32);letter-spacing:3px;margin-bottom:6px;">// WEAPON SELECTION</div>
-    <div style="font-size:13px;color:rgba(0,255,136,0.45);">Choose your signature weapon.</div>
+<div id="s-weapon" class="screen hidden" style="justify-content:space-between;">
+  <div style="flex-shrink:0;">
+    <div class="glitch" data-text="BIOCODED" style="font-size:26px;display:block;">BIOCODED</div>
+    <div style="font-size:10px;color:rgba(0,255,136,0.32);letter-spacing:3px;margin-top:6px;margin-bottom:4px;">// WEAPON SELECTION</div>
+    <div style="font-size:12px;color:rgba(0,255,136,0.42);margin-bottom:16px;">Choose your signature weapon.</div>
   </div>
-  <div class="weapon-opts" id="weapon-opts"></div>
-  <div style="padding-top:20px;">
-    <button class="btn" id="weapon-confirm" style="opacity:0.3;" onclick="confirmWeapon()">CONFIRM WEAPON</button>
+  <div class="weapon-opts" id="weapon-opts" style="flex:1;overflow-y:auto;"></div>
+  <div style="padding-top:14px;flex-shrink:0;">
+    <button class="btn" id="weapon-confirm" style="opacity:0.3;width:100%;" onclick="confirmWeapon()">CONFIRM WEAPON</button>
   </div>
 </div>
 
 <!-- ARCHETYPE REVEAL -->
-<div id="s-archetype" class="arc-reveal-screen hidden">
-  <div class="arc-scan-label">// SCAN COMPLETE — NEURAL PATTERN IDENTIFIED</div>
-  <div class="arc-big-name" id="a-name">--</div>
-  <div class="arc-line"></div>
-  <div class="arc-attrs" id="a-attrs"></div>
-  <div style="height:16px;"></div>
-  <div class="arc-desc" id="a-desc"></div>
-  <div style="height:12px;"></div>
-  <div class="arc-passive-label">// PASSIVE ABILITY</div>
-  <div style="height:6px;"></div>
-  <div class="arc-passive" id="a-passive"></div>
-  <div class="arc-cta">
-    <div class="arc-cta-hint">This is what the system found in you. Now choose how you operate.</div>
+<div id="s-archetype" class="arc-reveal-screen hidden" style="height:100vh;max-height:100vh;overflow:hidden;justify-content:space-between;padding:28px 20px 24px;">
+  <div>
+    <div class="arc-scan-label">// SCAN COMPLETE — NEURAL PATTERN IDENTIFIED</div>
+    <div class="arc-big-name" id="a-name" style="font-size:38px;">--</div>
+    <div class="arc-line"></div>
+    <div class="arc-attrs" id="a-attrs" style="margin-bottom:14px;"></div>
+    <div class="arc-desc" id="a-desc" style="font-size:13px;line-height:1.75;"></div>
+    <div style="height:10px;"></div>
+    <div class="arc-passive-label">// PASSIVE ABILITY</div>
+    <div style="height:4px;"></div>
+    <div class="arc-passive" id="a-passive" style="font-size:12px;"></div>
+  </div>
+  <div class="arc-cta" style="margin-top:0;padding-top:0;animation:fadeUp 0.4s ease 1.05s both;">
+    <div class="arc-cta-hint" style="margin-bottom:12px;">This is what the system found in you. Now choose how you operate.</div>
     <button class="btn" onclick="show('s-classlist')">CHOOSE YOUR CLASS</button>
   </div>
 </div>
 
 <!-- CLASS LIST -->
-<div id="s-classlist" class="screen hidden">
-  <div class="page-hdr">
-    <div style="font-size:10px;color:rgba(0,255,136,0.32);letter-spacing:3px;margin-bottom:6px;">// CLASS SELECTION</div>
+<div id="s-classlist" class="screen hidden" style="justify-content:flex-start;">
+  <div style="flex-shrink:0;margin-bottom:14px;">
+    <div class="glitch" data-text="BIOCODED" style="font-size:26px;display:block;">BIOCODED</div>
+    <div style="font-size:10px;color:rgba(0,255,136,0.32);letter-spacing:3px;margin-top:6px;margin-bottom:4px;">// CLASS SELECTION</div>
     <div style="font-size:12px;color:rgba(0,255,136,0.42);">Archetype is what the system reads. Class is how you operate.</div>
   </div>
-  <div class="cls-grid" id="cls-grid"></div>
+  <div class="cls-grid" id="cls-grid" style="overflow-y:auto;flex:1;"></div>
 </div>
 
 <!-- CLASS DETAIL -->
@@ -432,18 +435,18 @@ html,body{background:#000;min-height:100vh;width:100%;font-family:'Share Tech Mo
 </div>
 
 <!-- RETRIEVE -->
-<div id="s-retrieve" class="screen hidden">
-  <div class="page-hdr">
-    <div class="glitch" data-text="UNIT RECALL" style="font-size:28px;">UNIT RECALL</div>
-    <div class="page-hdr-sub">ENTER YOUR UNIT ID TO LOAD YOUR FILE</div>
+<div id="s-retrieve" class="screen hidden" style="justify-content:space-between;">
+  <div>
+    <div class="glitch" data-text="UNIT RECALL" style="font-size:28px;display:block;">UNIT RECALL</div>
+    <div class="page-hdr-sub" style="margin-top:6px;margin-bottom:20px;">ENTER YOUR UNIT ID TO LOAD YOUR FILE</div>
+    <div style="font-size:13px;color:rgba(0,255,136,0.42);line-height:1.8;margin-bottom:24px;">Your Unit ID looks like:<br>NAI-RGDZ-1A2B</div>
+    <input class="ret-inp" id="ret-inp" placeholder="enter unit id..." maxlength="14" autocomplete="off" spellcheck="false" autocapitalize="characters"/>
+    <div style="font-size:13px;color:#ff9900;margin-top:14px;" class="hidden" id="ret-err">// UNIT ID NOT FOUND IN SYSTEM.</div>
   </div>
-  <div style="font-size:13px;color:rgba(0,255,136,0.45);line-height:1.8;margin-bottom:24px;">Your Unit ID looks like:<br>NAI-RGDZ-1A2B</div>
-  <input class="ret-inp" id="ret-inp" placeholder="enter unit id..." maxlength="14" autocomplete="off" spellcheck="false" autocapitalize="characters"/>
-  <div style="display:flex;flex-direction:column;gap:10px;margin-top:28px;">
+  <div style="display:flex;flex-direction:column;gap:10px;">
     <button class="btn" onclick="loadUnit()">LOAD FILE</button>
     <button class="btn secondary" onclick="show('s-intro')">BACK</button>
   </div>
-  <div style="font-size:13px;color:#ff9900;margin-top:16px;" class="hidden" id="ret-err">// UNIT ID NOT FOUND IN SYSTEM.</div>
 </div>
 
 <script>
