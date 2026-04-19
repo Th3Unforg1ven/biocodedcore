@@ -485,16 +485,30 @@ let st={scores:{},currentQ:0,phase:"codename",charName:"",weaponIdx:null,classRe
 let imgState={img:null,offsetX:0,offsetY:0,scale:1,dragging:false,lastX:0,lastY:0,rawB64:""};
 const BOOT_LINES=["TERMINAL DIAGNOSIS PROTOCOL","","Loading kernel modules...","WireBrain driver: OK","Synaptic relay: ACTIVE","DNA rewrite daemon: STANDBY","Signal scanner: READY","Desperto detection: ENABLED","","System ready. Awaiting command.",""];
 
-function show(id){['s-boot','s-intro','s-terminal','s-archetype','s-classlist','s-cls-detail','s-weapon','s-sheet','s-retrieve'].forEach(s=>{const el=document.getElementById(s);if(el)el.classList.add('hidden');});const el=document.getElementById(id);if(el)el.classList.remove('hidden');if(id==='s-intro')initIntroKeys();if(id==='s-classlist')initClasslistKeys();if(id==='s-cls-detail')initClassDetailKeys();if(id==='s-weapon')initWeaponKeys();}
+function show(id){['s-boot','s-intro','s-terminal','s-archetype','s-classlist','s-cls-detail','s-weapon','s-sheet','s-retrieve'].forEach(s=>{const el=document.getElementById(s);if(el)el.classList.add('hidden');});const el=document.getElementById(id);if(el)el.classList.remove('hidden');if(id==='s-intro')initIntroKeys();if(id==='s-archetype')initArchetypeKeys();if(id==='s-classlist')initClasslistKeys();if(id==='s-cls-detail')initClassDetailKeys();if(id==='s-weapon')initWeaponKeys();}
+
+function initArchetypeKeys(){
+  window.addEventListener('keydown',function handler(e){
+    const s=document.getElementById('s-archetype');
+    if(!s||s.classList.contains('hidden')){window.removeEventListener('keydown',handler);return;}
+    if(e.key==='1'){
+      e.preventDefault();
+      window.removeEventListener('keydown',handler);
+      setTimeout(()=>show('s-classlist'),0);
+    }
+  });
+}
 
 function initClasslistKeys(){
+  const classNames=Object.keys(CLASSES);
   window.addEventListener('keydown',function handler(e){
     const s=document.getElementById('s-classlist');
     if(!s||s.classList.contains('hidden')){window.removeEventListener('keydown',handler);return;}
-    if(e.key==='1'){
+    const n=parseInt(e.key);
+    if(n>=1&&n<=classNames.length){
       window.removeEventListener('keydown',handler);
       const cards=document.querySelectorAll('.cls-card');
-      if(cards.length>0)cards[0].click();
+      if(cards[n-1])cards[n-1].click();
     }
   });
 }
@@ -535,9 +549,16 @@ function initBoot(){const log=document.getElementById('boot-log');log.innerHTML=
 function initIntroKeys(){
   window.addEventListener('keydown',function handler(e){
     const s=document.getElementById('s-intro');
-    if(s&&!s.classList.contains('hidden')){
-      if(e.key==='1'){window.removeEventListener('keydown',handler);startScan();}
-      if(e.key==='2'){window.removeEventListener('keydown',handler);showRetrieve();}
+    if(!s||s.classList.contains('hidden')){window.removeEventListener('keydown',handler);return;}
+    if(e.key==='1'){
+      e.preventDefault();
+      window.removeEventListener('keydown',handler);
+      setTimeout(()=>startScan(),0);
+    }
+    if(e.key==='2'){
+      e.preventDefault();
+      window.removeEventListener('keydown',handler);
+      setTimeout(()=>showRetrieve(),0);
     }
   });
 }
@@ -615,7 +636,14 @@ function revealArchetype(){
   show('s-archetype');
 }
 
-function buildClassGrid(){const grid=document.getElementById('cls-grid');grid.innerHTML='';Object.entries(CLASSES).forEach(([name,cls])=>{const d=document.createElement('div');d.className='cls-card';d.onclick=()=>openClassDetail(name);d.innerHTML=(CLASS_ICONS[name]||'')+`<div class="cls-cname">${name.toUpperCase()}</div><div class="cls-crole">${cls.role}</div><div class="cls-csig">// ${cls.sig}</div>`;grid.appendChild(d);});}
+function buildClassGrid(){
+  const grid=document.getElementById('cls-grid');grid.innerHTML='';
+  Object.entries(CLASSES).forEach(([name,cls],idx)=>{
+    const d=document.createElement('div');d.className='cls-card';d.onclick=()=>openClassDetail(name);
+    d.innerHTML=(CLASS_ICONS[name]||'')+`<div class="cls-cname">${name.toUpperCase()}</div><div class="cls-crole">${cls.role}</div><div class="cls-csig">// ${cls.sig}</div>`;
+    grid.appendChild(d);
+  });
+}
 
 function buildExpandableAbilities(abilities,container){abilities.forEach(a=>{const block=document.createElement('div');block.className='ab-block';const header=document.createElement('div');header.className='ab-header';const nameEl=document.createElement('span');nameEl.className='ab-name-lbl';nameEl.textContent=a.name.toUpperCase();const toggle=document.createElement('span');toggle.className='ab-toggle';toggle.textContent='[+]';header.appendChild(nameEl);header.appendChild(toggle);const body=document.createElement('div');body.className='ab-body collapsed';body.textContent=a.desc;header.onclick=()=>{const c=body.classList.toggle('collapsed');toggle.textContent=c?'[+]':'[-]';};block.appendChild(header);block.appendChild(body);container.appendChild(block);});}
 
